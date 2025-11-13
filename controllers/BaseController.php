@@ -1,31 +1,6 @@
 <?php
 class BaseController {
 
-<<<<<<< HEAD
-    protected $baseUrl;
-
-    public function __construct()
-    {
-        // Dynamisch bepalen op runtime
-        $this->baseUrl = '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
-
-        // Root-case: dirname('/') = '.' → correcten
-        if ($this->baseUrl === '/.') {
-            $this->baseUrl = '/';
-        }
-    }
-
-    protected function render($view, $data = [])
-    {
-        extract($data);
-
-        $viewFile = __DIR__ . "/../views/{$view}.php";
-
-        if (!file_exists($viewFile)) {
-            throw new Exception("View not found: {$viewFile}");
-        }
-
-=======
     protected const BASE_URL = '/collabs/';
 
     protected function render($view, $data = []) {
@@ -33,7 +8,6 @@ class BaseController {
         extract($data);
 
         // Start output buffering
->>>>>>> parent of 7c4b79f (fixed broken router and incorrect communication between apache and BaseController)
         ob_start();
 
         // Include the view file
@@ -52,18 +26,8 @@ class BaseController {
         if (strpos($url, 'http') !== 0 && strpos($url, self::BASE_URL) !== 0) {
             $url = self::BASE_URL . ltrim($url, '/');
         }
-<<<<<<< HEAD
-
-        // Correct samenstellen
-        $base = rtrim($this->baseUrl, '/');
-        $path = '/' . ltrim($url, '/');
-
-        header("Location: {$base}{$path}");
-        exit;
-=======
         header("Location: {$url}");
         exit();
->>>>>>> parent of 7c4b79f (fixed broken router and incorrect communication between apache and BaseController)
     }
 
     protected function json($data) {
