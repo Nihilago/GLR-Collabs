@@ -11,7 +11,7 @@
     <form class="mt-8 space-y-6" action="/collabs/register" method="POST">
       <div>
         <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
-        <input id="fullname" name="fullname" type="text" required class="appearance-none rounded w-full py-2 px-3 border border-gray-300 focus:outline-none focus:ring-brand-green focus:border-brand-green">
+        <input id="full_name" name="full_name" type="text" required class="appearance-none rounded w-full py-2 px-3 border border-gray-300 focus:outline-none focus:ring-brand-green focus:border-brand-green">
       </div>
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
