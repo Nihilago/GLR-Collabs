@@ -1,10 +1,8 @@
 <?php
-class Router
-{
+class Router {
     private $routes = [];
 
-    public function addRoute($method, $path, $controller, $action)
-    {
+    public function addRoute($method, $path, $controller, $action) {
         $this->routes[] = [
             'method' => strtoupper($method),
             'path' => $path,
@@ -13,9 +11,14 @@ class Router
         ];
     }
 
+<<<<<<< HEAD
     public function dispatch()
     {
         // 1. Raw path uit URL ophalen
+=======
+    public function dispatch() {
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+>>>>>>> parent of 7c4b79f (fixed broken router and incorrect communication between apache and BaseController)
         $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         // 2. Base path bepalen uit SCRIPT_NAME
@@ -58,3 +61,4 @@ class Router
         require_once 'views/404.php';
     }
 }
+?>

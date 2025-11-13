@@ -1,6 +1,7 @@
 <?php
 class BaseController {
 
+<<<<<<< HEAD
     protected $baseUrl;
 
     public function __construct()
@@ -24,18 +25,34 @@ class BaseController {
             throw new Exception("View not found: {$viewFile}");
         }
 
+=======
+    protected const BASE_URL = '/collabs/';
+
+    protected function render($view, $data = []) {
+        // Extract data array to variables
+        extract($data);
+
+        // Start output buffering
+>>>>>>> parent of 7c4b79f (fixed broken router and incorrect communication between apache and BaseController)
         ob_start();
-        include $viewFile;
-        echo ob_get_clean();
+
+        // Include the view file
+        include "views/{$view}.php";
+
+        // Get the content
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        // Return or echo the content
+        echo $content;
     }
 
-    protected function redirect($url)
-    {
-        // Absolute URL (http/https)
-        if (preg_match('#^https?://#', $url)) {
-            header("Location: $url");
-            exit;
+    protected function redirect($url) {
+        // Check if URL is an absolute URL or already contains BASE_URL
+        if (strpos($url, 'http') !== 0 && strpos($url, self::BASE_URL) !== 0) {
+            $url = self::BASE_URL . ltrim($url, '/');
         }
+<<<<<<< HEAD
 
         // Correct samenstellen
         $base = rtrim($this->baseUrl, '/');
@@ -43,12 +60,16 @@ class BaseController {
 
         header("Location: {$base}{$path}");
         exit;
+=======
+        header("Location: {$url}");
+        exit();
+>>>>>>> parent of 7c4b79f (fixed broken router and incorrect communication between apache and BaseController)
     }
 
-    protected function json($data)
-    {
+    protected function json($data) {
         header('Content-Type: application/json');
         echo json_encode($data);
         exit();
     }
 }
+?>

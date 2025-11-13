@@ -14,16 +14,16 @@
     <!-- Header -->
     <header class="bg-black text-white p-4">
         <nav class="max-w-6xl mx-auto flex justify-between items-center">
-            <a href="<?= BASE_PATH ?>" class="text-2xl font-bold brand-green">GLR Collabs</a>
+            <a href="/collabs" class="text-2xl font-bold brand-green">GLR Collabs</a>
 
             <div class="flex items-center space-x-4">
                 <?php if (isset($isLoggedIn) && $isLoggedIn): ?>
                     <span class="text-sm">Welcome, <?= htmlspecialchars($userName ?? 'User') ?>!</span>
-                    <a href="<?= BASE_PATH ?>/dashboard" class="bg-brand-green text-black px-4 py-2 rounded hover:bg-lime-400">Dashboard</a>
-                    <a href="<?= BASE_PATH ?>/logout" class="text-white hover:text-gray-300">Logout</a>
+                    <a href="collabs/dashboard" class="bg-brand-green text-black px-4 py-2 rounded hover:bg-lime-400">Dashboard</a>
+                    <a href="collabs/logout" class="text-white hover:text-gray-300">Logout</a>
                 <?php else: ?>
-                    <a href="<?= BASE_PATH ?>/login" class="text-white hover:text-gray-300">Login</a>
-                    <a href="<?= BASE_PATH ?>/register" class="bg-brand-green text-black px-4 py-2 rounded hover:bg-lime-400">Sign Up</a>
+                    <a href="collabs/login" class="text-white hover:text-gray-300">Login</a>
+                    <a href="collabs/register" class="bg-brand-green text-black px-4 py-2 rounded hover:bg-lime-400">Sign Up</a>
                 <?php endif; ?>
             </div>
         </nav>
