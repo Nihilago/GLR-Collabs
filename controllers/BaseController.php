@@ -1,17 +1,23 @@
 <?php
+class BaseController {
 
-class BaseController
-{
+    protected $baseUrl;
 
-    // Dynamisch de BASE_URL vaststellen
-    protected const BASE_URL =
-    '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
+    public function __construct()
+    {
+        // Dynamisch bepalen op runtime
+        $this->baseUrl = '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
+
+        // Root-case: dirname('/') = '.' → correcten
+        if ($this->baseUrl === '/.') {
+            $this->baseUrl = '/';
+        }
+    }
 
     protected function render($view, $data = [])
     {
         extract($data);
 
-        // Correct absoluut pad
         $viewFile = __DIR__ . "/../views/{$view}.php";
 
         if (!file_exists($viewFile)) {
@@ -31,11 +37,11 @@ class BaseController
             exit;
         }
 
-        // Zorg dat BASE_URL geen dubbele slash geeft
-        $base = rtrim(self::BASE_URL, '/');
-        $url  = '/' . ltrim($url, '/');
+        // Correct samenstellen
+        $base = rtrim($this->baseUrl, '/');
+        $path = '/' . ltrim($url, '/');
 
-        header("Location: {$base}{$url}");
+        header("Location: {$base}{$path}");
         exit;
     }
 
@@ -43,6 +49,6 @@ class BaseController
     {
         header('Content-Type: application/json');
         echo json_encode($data);
-        exit;
+        exit();
     }
 }

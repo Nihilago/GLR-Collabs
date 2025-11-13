@@ -15,21 +15,32 @@ class Router
 
     public function dispatch()
     {
-        $basePath = '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
-        $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $requestUri = substr($requestUri, strlen($basePath));
-        if ($requestUri === false || $requestUri === '') {
-            $requestUri = '/';
-        }
-        
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
+        // 1. Raw path uit URL ophalen
         $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        // Remove trailing slash except for root
+        // 2. Base path bepalen uit SCRIPT_NAME
+        $scriptName = $_SERVER['SCRIPT_NAME'];       // bv: /collabs/index.php
+        $basePath = rtrim(dirname($scriptName), '/'); // bv: /collabs
+
+        // 3. Base path strippen
+        if ($basePath !== '' && strpos($requestUri, $basePath) === 0) {
+            $requestUri = substr($requestUri, strlen($basePath));
+        }
+
+        // 4. Normalize empty
+        if ($requestUri === '' || $requestUri === false) {
+            $requestUri = '/';
+        }
+
+        // 5. Trailing slash verwijderen (maar niet voor root)
         if ($requestUri !== '/' && substr($requestUri, -1) === '/') {
             $requestUri = rtrim($requestUri, '/');
         }
 
+        // 6. Methode ophalen
+        $requestMethod = $_SERVER['REQUEST_METHOD'];
+
+        // 7. Router matchen
         foreach ($this->routes as $route) {
             if ($route['method'] === $requestMethod && $route['path'] === $requestUri) {
                 $controllerName = $route['controller'];
@@ -42,7 +53,7 @@ class Router
             }
         }
 
-        // 404 Not Found
+        // 8. 404
         http_response_code(404);
         require_once 'views/404.php';
     }
