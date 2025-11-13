@@ -3,7 +3,6 @@
 A modern PHP MVC application for student collaboration and project help requests.
 
 ## Features
-
 - User registration and authentication
 - Secure password hashing
 - Session management
@@ -13,9 +12,8 @@ A modern PHP MVC application for student collaboration and project help requests
 - PDO database connection
 
 ## Project Structure
-
 ```
-/
+glr_collabs_fixed/
 ├── config/
 │   └── database.php          # Database configuration
 ├── controllers/
@@ -43,68 +41,18 @@ A modern PHP MVC application for student collaboration and project help requests
 │   └── js/                   # Custom JavaScript files
 ├── index.php                 # Application entry point
 ├── .htaccess                 # Apache rewrite rules
-└── .env.example              # Environment variables template
-```
+└── database_setup.sql        # Database schema
 
-## Setup Instructions
+## Installation
 
-1. **Database Setup**: 
-   - Create a MySQL database using the provided SQL script
-   - Update database credentials in `config/database.php`
+1. Upload all files to your web server
+2. Configure database settings in `config/database.php`
+3. Import `database_setup.sql` into your MySQL database
+4. Ensure Apache mod_rewrite is enabled
+5. Access your application at: https://yourdomain.com/collabs/
 
-2. **Web Server Configuration**:
-   - Place files in your web server directory
-   - Ensure mod_rewrite is enabled for clean URLs
-   - Point document root to the project directory
-
-3. **Permissions**:
-   - Ensure PHP has write permissions for session files
-   - Set appropriate file permissions (644 for files, 755 for directories)
-
-## Database Schema
-
-The application requires a `users` table with the following structure:
-- `id` (Primary Key, Auto Increment)
-- `full_name` (VARCHAR)
-- `email` (VARCHAR, Unique)
-- `password` (VARCHAR, Hashed)
-- `created_at` (TIMESTAMP)
-- `last_login` (TIMESTAMP, Nullable)
-
-## Routes
-
-- `GET /` - Home page
-- `GET /login` - Login form
-- `POST /login` - Process login
-- `GET /register` - Registration form  
-- `POST /register` - Process registration
-- `GET /dashboard` - User dashboard (requires login)
-- `GET /logout` - Logout user
-
-## Security Features
-
-- Password hashing using PHP's `password_hash()`
-- Prepared statements to prevent SQL injection
-- Session-based authentication
-- Input validation and sanitization
-- CSRF protection ready (can be extended)
-
-## Technologies Used
-
-- PHP 7.4+ with PDO
-- MySQL/MariaDB
-- TailwindCSS for styling
-- Apache with mod_rewrite
-
-## Development
-
-For development, enable error reporting by ensuring these lines are in `index.php`:
-
-```php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-```
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
+## Fixed Issues
+- Added missing login.php and register.php views
+- Fixed routing with proper .htaccess configuration
+- Ensured all navigation links use absolute paths
+- Added trailing slash handling in router
