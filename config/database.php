@@ -1,4 +1,7 @@
 <?php
+// Define BASE_PATH
+define('BASE_PATH', '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/'));
+
 // Database Configuration
 class DatabaseConfig {
     const HOST = 'localhost';

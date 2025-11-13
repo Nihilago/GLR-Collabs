@@ -1,8 +1,10 @@
 <?php
-class Router {
+class Router
+{
     private $routes = [];
 
-    public function addRoute($method, $path, $controller, $action) {
+    public function addRoute($method, $path, $controller, $action)
+    {
         $this->routes[] = [
             'method' => strtoupper($method),
             'path' => $path,
@@ -11,7 +13,15 @@ class Router {
         ];
     }
 
-    public function dispatch() {
+    public function dispatch()
+    {
+        $basePath = '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
+        $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $requestUri = substr($requestUri, strlen($basePath));
+        if ($requestUri === false || $requestUri === '') {
+            $requestUri = '/';
+        }
+        
         $requestMethod = $_SERVER['REQUEST_METHOD'];
         $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -37,4 +47,3 @@ class Router {
         require_once 'views/404.php';
     }
 }
-?>

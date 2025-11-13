@@ -1,39 +1,48 @@
 <?php
-class BaseController {
 
-    protected const BASE_URL = '/collabs/';
+class BaseController
+{
 
-    protected function render($view, $data = []) {
-        // Extract data array to variables
+    // Dynamisch de BASE_URL vaststellen
+    protected const BASE_URL =
+    '/' . trim(dirname($_SERVER['SCRIPT_NAME']), '/');
+
+    protected function render($view, $data = [])
+    {
         extract($data);
 
-        // Start output buffering
-        ob_start();
+        // Correct absoluut pad
+        $viewFile = __DIR__ . "/../views/{$view}.php";
 
-        // Include the view file
-        include "views/{$view}.php";
-
-        // Get the content
-        $content = ob_get_contents();
-        ob_end_clean();
-
-        // Return or echo the content
-        echo $content;
-    }
-
-    protected function redirect($url) {
-        // Check if URL is an absolute URL or already contains BASE_URL
-        if (strpos($url, 'http') !== 0 && strpos($url, self::BASE_URL) !== 0) {
-            $url = self::BASE_URL . ltrim($url, '/');
+        if (!file_exists($viewFile)) {
+            throw new Exception("View not found: {$viewFile}");
         }
-        header("Location: {$url}");
-        exit();
+
+        ob_start();
+        include $viewFile;
+        echo ob_get_clean();
     }
 
-    protected function json($data) {
+    protected function redirect($url)
+    {
+        // Absolute URL (http/https)
+        if (preg_match('#^https?://#', $url)) {
+            header("Location: $url");
+            exit;
+        }
+
+        // Zorg dat BASE_URL geen dubbele slash geeft
+        $base = rtrim(self::BASE_URL, '/');
+        $url  = '/' . ltrim($url, '/');
+
+        header("Location: {$base}{$url}");
+        exit;
+    }
+
+    protected function json($data)
+    {
         header('Content-Type: application/json');
         echo json_encode($data);
-        exit();
+        exit;
     }
 }
-?>
