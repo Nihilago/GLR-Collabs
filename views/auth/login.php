@@ -5,7 +5,7 @@
     <?php if (!empty($error)): ?>
       <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
-    <form class="mt-8 space-y-6" action="/collabs/login" method="POST">
+    <form class="mt-8 space-y-6" action="/collabs/controllers/authController.php" method="POST">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
         <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none rounded w-full py-2 px-3 border border-gray-300 focus:outline-none focus:ring-brand-green focus:border-brand-green">

@@ -1,8 +1,10 @@
 <?php
-class Router {
+class Router
+{
     private $routes = [];
 
-    public function addRoute($method, $path, $controller, $action) {
+    public function addRoute($method, $path, $controller, $action)
+    {
         $this->routes[] = [
             'method' => strtoupper($method),
             'path' => $path,
@@ -11,13 +13,14 @@ class Router {
         ];
     }
 
-    public function dispatch() {
-        $requestMethod = $_SERVER['REQUEST_METHOD'];
+    public function dispatch()
+    {
+        // 1. Raw path uit URL ophalen
         $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         // 2. Base path bepalen uit SCRIPT_NAME
         $scriptName = $_SERVER['SCRIPT_NAME'];       // bv: /collabs/index.php
-        $basePath = rtrim(dirname($scriptName), '/'); // bv: /collabs
+        $basePath   = rtrim(dirname($scriptName), '/'); // bv: /collabs
 
         // 3. Base path strippen
         if ($basePath !== '' && strpos($requestUri, $basePath) === 0) {
@@ -26,6 +29,11 @@ class Router {
 
         // 4. Normalize empty
         if ($requestUri === '' || $requestUri === false) {
+            $requestUri = '/';
+        }
+
+        // 4b. /index.php als root behandelen
+        if ($requestUri === '/index.php') {
             $requestUri = '/';
         }
 
@@ -39,9 +47,12 @@ class Router {
 
         // 7. Router matchen
         foreach ($this->routes as $route) {
+            // Debug kun je zo laten:
+            // var_dump($route['path'], $requestUri);
+
             if ($route['method'] === $requestMethod && $route['path'] === $requestUri) {
                 $controllerName = $route['controller'];
-                $actionName = $route['action'];
+                $actionName     = $route['action'];
 
                 require_once "controllers/{$controllerName}.php";
                 $controller = new $controllerName();
@@ -55,4 +66,3 @@ class Router {
         require_once 'views/404.php';
     }
 }
-?>

@@ -25,8 +25,8 @@
     <div class="text-center">
       <h2 class="text-2xl font-bold mb-4">Get Started Today</h2>
       <div class="space-x-4">
-        <a href="/collabs/register" class="bg-brand-green text-black px-6 py-3 rounded-lg hover:bg-lime-400 inline-block font-bold">Sign Up</a>
-        <a href="/collabs/login" class="border-2 border-brand-green text-black px-6 py-3 rounded-lg hover:bg-gray-100 inline-block font-bold">Login</a>
+        <a href="/collabs/views/auth/register.php" class="bg-brand-green text-black px-6 py-3 rounded-lg hover:bg-lime-400 inline-block font-bold">Sign Up</a>
+        <a href="/collabs/views/auth/login.php" class="border-2 border-brand-green text-black px-6 py-3 rounded-lg hover:bg-gray-100 inline-block font-bold">Login</a>
       </div>
     </div>
     <?php else: ?>
