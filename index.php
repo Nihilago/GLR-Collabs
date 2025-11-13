@@ -15,13 +15,14 @@ Session::start();
 $router = new Router();
 
 // Define routes
-$router->addRoute('GET', 'collabs/', 'HomeController', 'index');
-$router->addRoute('GET', 'collabs/login', 'AuthController', 'showLogin');
-$router->addRoute('POST', 'collabs/login', 'AuthController', 'login');
-$router->addRoute('GET', 'collabs/register', 'AuthController', 'showRegister');
-$router->addRoute('POST', 'collabs/register', 'AuthController', 'register');
-$router->addRoute('GET', 'collabs/logout', 'AuthController', 'logout');
-$router->addRoute('GET', '/dashboard', 'DashboardController', 'index');
+$router->addRoute('GET', '/collabs', 'HomeController', 'index');
+$router->addRoute('GET', '/collabs/', 'HomeController', 'index');
+$router->addRoute('GET', '/collabs/login', 'AuthController', 'showLogin');
+$router->addRoute('POST', '/collabs/login', 'AuthController', 'login');
+$router->addRoute('GET', '/collabs/register', 'AuthController', 'showRegister');
+$router->addRoute('POST', '/collabs/register', 'AuthController', 'register');
+$router->addRoute('GET', '/collabs/logout', 'AuthController', 'logout');
+$router->addRoute('GET', '/collabs/dashboard', 'DashboardController', 'index');
 
 // Dispatch the request
 $router->dispatch();
